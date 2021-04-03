@@ -52,6 +52,7 @@ func main() {
 	sixthLevel()
 }
 
+// 使用匿名函数实现同等逻辑
 func length(node *ListNode) int {
 	if node == nil {
 		return 0
