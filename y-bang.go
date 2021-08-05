@@ -59,10 +59,22 @@ func length4(list []interface{}) int {
 	// lisp 里面没有变量声明，所以需要定义 (let ((h lambda (l) (quote ())))...)
 	var h lengthType
 	// 新的 length 函数
-	// h 的值只变化一次
+	// h 的值只变化一次，在执行完 L 后，h 的值才被确定，作为 L 参数的函数中的 h 的值也才被确定
 	h = L(func(arg []interface{}) int {
 		return h(arg)
 	})
+
+	/* h 相当于
+	h = func(list []interface{}) int {
+		if len(list) == 0 {
+			return 0
+		} else {
+			return 1 + func(arg []interface{}) int {
+				return h(arg)
+			}(list[1:])
+		}
+	}
+	*/
 	return h(list)
 
 }
